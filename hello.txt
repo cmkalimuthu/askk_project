@@ -1,1 +1,80 @@
-hello
+GIT HUB PROCEDURES.
+
+CREATION
+
+1.go to the folder and r-click then choose git-bash and give command git init in terminal.
+
+LINKING
+
+2.then this cmd git remote add origin "copy&paste rep link from hub"
+
+FETCHING FROM HUB(pull)
+3.git pul
+
+4.git pull origin main
+
+FILE CREATION
+5.create a new file/git status to see existing file
+
+6.git add filename/for multiple files(git add -A )
+
+COMMIT
+7.git commit -m "message"/for multiple files(git commit -a -m "message")
+changes commit in local rep
+
+8.git log (shows information about commit)
+
+BRANCHING
+
+9.git branch bname(for new branch)
+
+10.git checkout newbranchname(switch branch) or to
+
+11.ls (list files)
+
+commit made within this new branch wont reflect in master branch.
+
+MERGING
+
+always merge after all branching to main branch.
+
+//be in destination branch
+12.git merge source branch
+then list all files in master it will have all branch files
+
+13.cat filename (for see content) 
+
+
+REBASING (merging)
+
+gitpull=git fetch+merge
+
+used to reduce number of branches.
+linear work flow for better navigate
+
+14.in new branch 
+git rebase master/git rebase new branch
+
+PUSHING
+generate public ssh
+
+15.ssh-keygen
+
+16.cat loction inthat gen
+settings->ssh&gpg keys
+new sshkey->title->paste ur key from generated key in file
+then add shh key
+
+17.ssh -T git@github.com
+go to ssh key if green then activated
+now we can push
+
+in firstbranch
+18.to create branch in main rep
+git push origin firstbranchname
+(it will create new branch in main rep)
+
+in master branch
+19.git push origin master
+(it will push all changes in master hub)
+
