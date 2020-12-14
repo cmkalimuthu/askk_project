@@ -15,8 +15,8 @@
                    <input type="submit" name="submit"  value="login"  id="button">
                  </div>
                 <p>No account?
-                <a href="registration.php">&nbsp;register</a></p>
+                <a href="registration.php"style="color: #731d3d;">&nbsp;register</a></p>
                 <p>
-                  forgotten your <a href="recover.php?mode=username">username</a> or <a href="recover.php?mode=password"> password</a>
+                  forgotten your <a href="recover.php?mode=username" style="color: #731d3d;">username</a> or <a href="recover.php?mode=password"style="color: #731d3d;"> password</a>
                 </p>
 </form>

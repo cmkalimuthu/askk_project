@@ -65,5 +65,13 @@ function output_errors($errors){
 	}//impode for array to string
 	return '<ul>' . implode('',$output) .'</ul>';
 }
+function display_users($users){
+	$output=array();
+	foreach ($users as $user) {
+		# code...
+		$output[]='<li style="color:red;">'. $user .'</li>';
+	}//impode for array to string
+	echo '<ul>' . implode('',$output) .'</ul>';
+}
  ?>
 

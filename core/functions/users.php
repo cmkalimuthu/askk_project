@@ -1,5 +1,68 @@
 <?php 
+if(array_key_exists('block', $_POST)) { 
+            block_user($_GET['username'],"block"); 
+        }
+if(array_key_exists('unblock', $_POST)) { 
+            block_user($_GET['username'],"unblock"); 
+        }
+function block_user($username,$data){
+	global $con;
+	if($data==="block")
+	$query="UPDATE users SET active=0 WHERE username='$username'";
+	else if($data==="unblock")
+	$query="UPDATE users SET active=1 WHERE username='$username'";
 
+	$res=mysqli_query($con,$query);
+}
+
+
+function all_users(){
+	global $con;
+	$data=array();
+	$query="SELECT username ,active FROM users";
+	$res=mysqli_query($con,$query);
+		while ($row = $res->fetch_assoc()) {//fetch one by one data from db
+		$username=$row['username'];
+		$active=$row['active'];
+		display_all_users($username,$active);
+	}
+	
+}
+function display_all_users($username,$active){
+
+	if(user_active($username)===true){
+		$block_disable="";
+		$unblock_disable="disabled";
+		$bg="";
+		$ug="#ddd";
+	}
+	else{
+		$block_disable="disabled";
+		$unblock_disable="";
+		$bg="#ddd";
+		$ug="";
+	}
+	?>
+	<div style="background-color: #ddd;margin: 20px;">
+		<ul style="list-style-type: none;">
+			<form method="post" action="restrict.php?username=<?php echo $username ?>">
+			<li >USER&nbsp;:&nbsp;
+				<a href="<?php echo $username;?>" 
+					style="color: #116573">
+				<?php echo $username;?>
+					
+				</a> <hr>
+			
+				<li>
+					<input type="submit" name="block" value="Block" style="background-color: red;color: white;cursor: pointer;border: 2px solid #ddd;background-color: <?php echo "$bg"; ?>" <?php echo $block_disable; ?>>
+					<input type="submit" name="unblock" value="Un-Block"style="background-color: green;color: white;cursor: pointer;border: 2px solid #ddd;background-color: <?php echo "$ug"; ?>"<?php echo $unblock_disable; ?>>
+				</li>
+			</li>
+			</form>
+		</ul>
+	</div>
+	<?php  
+}
 
 function mail_users($subject,$body){
 	global $con;
@@ -132,6 +195,7 @@ function change_password($new_password,$user_id){
 	}
 
 }
+
 //function to get the user data from database
 function users_data($user_id){
 	global $con;

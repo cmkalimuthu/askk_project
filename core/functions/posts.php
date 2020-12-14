@@ -102,19 +102,26 @@ function notifications($data){
   $query="SELECT post_accepted,post_id,food_type,accept_time FROM post WHERE user_id=$session_user_id "; 
   $res=mysqli_query($con,$query);
   while ($row = $res->fetch_assoc()) {
-
-    $user_id=$row['post_accepted'];
-    $post_id=$row['post_id'];
-    $food_type=$row['food_type'];
-    $accept_time=$row['accept_time'];
-    if($user_id!=0){
-    $accepted_username=username_from_user_id($user_id);
-    notification_display($user_id,$post_id,$food_type,$accepted_username,$data,$accept_time);}
+ $notification_data=array(
+    'user_id' =>$row['post_accepted'],
+    'post_id' =>$row['post_id'],
+    'food_type' =>$row['food_type'],
+    'accept_time'=>$row['accept_time'],
+  );
+    if($notification_data['user_id']!=0){
+    $accepted_username=username_from_user_id($notification_data['user_id']);
+    notification_display($notification_data,$accepted_username,$data);}
   }
   
 $res->free();
 }
-function notification_display($user_id,$post_id,$food_type,$accepted_username,$data,$accept_time){
+function notification_display($notification_data,$accepted_username,$data){
+  $user_id=$notification_data['user_id'];
+  $post_id=$notification_data['post_id'];
+  $food_type=$notification_data['food_type'];
+  $accepted_username=$accepted_username;
+  $data=$data;
+  $accept_time=$notification_data['accept_time'];
 
   ?>
 
@@ -223,7 +230,6 @@ function   post_info($data,$user_id){
     	  $post_data=array(
 
         'user_id'=>$row['user_id'],
-        'username'=>username_from_user_id($user_id),
         'food_type' => $row["food_type"],
         'food_quantity' => $row["food_quantity"],
         'time_limit' => $row["time_limit"],
@@ -233,7 +239,8 @@ function   post_info($data,$user_id){
         'post_id'=>$row['post_id'],
 
         );
-        $passing_to_post=post_box($post_data);
+        $username=username_from_user_id($post_data['user_id']);
+        $passing_to_post=post_box($post_data,$username);
         
     }
 
@@ -242,9 +249,8 @@ function   post_info($data,$user_id){
 }
 
 }
-function post_box($post_data){
+function post_box($post_data,$username){
  $user_id=$post_data['user_id'];
-  $username=$post_data['username'];
   $food_type=$post_data['food_type'];
   $food_quantity=$post_data['food_quantity'];
   $time_limit=$post_data['time_limit'];
