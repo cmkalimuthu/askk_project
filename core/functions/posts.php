@@ -220,16 +220,20 @@ function   post_info($data,$user_id){
 		 if($res=mysqli_query($con,$query)) {
     //store values in variable from post table
     while ($row = $res->fetch_assoc()) {
-    	  $user_id=$row['user_id'];
-    	  $username=username_from_user_id($user_id);
-        $food_type = $row["food_type"];
-        $food_quantity = $row["food_quantity"];
-        $time_limit = $row["time_limit"];
-        $active=$row['active'];
-        $description=$row['description'];
-        $posting_time=$row['posting_time'];
-        $post_id=$row['post_id'];
-        $passing_to_post=post_box($user_id,$username,$food_type,$food_quantity,$time_limit,$active,$posting_time,$description,$post_id);
+    	  $post_data=array(
+
+        'user_id'=>$row['user_id'],
+        'username'=>username_from_user_id($user_id),
+        'food_type' => $row["food_type"],
+        'food_quantity' => $row["food_quantity"],
+        'time_limit' => $row["time_limit"],
+        'active' =>$row['active'],
+        'description'=>$row['description'],
+        'posting_time'=>$row['posting_time'],
+        'post_id'=>$row['post_id'],
+
+        );
+        $passing_to_post=post_box($post_data);
         
     }
 
@@ -238,7 +242,16 @@ function   post_info($data,$user_id){
 }
 
 }
-function post_box($user_id,$username,$food_type,$food_quantity,$time_limit,$active,$posting_time,$description,$post_id){
+function post_box($post_data){
+ $user_id=$post_data['user_id'];
+  $username=$post_data['username'];
+  $food_type=$post_data['food_type'];
+  $food_quantity=$post_data['food_quantity'];
+  $time_limit=$post_data['time_limit'];
+  $active=$post_data['active'];
+  $posting_time=$post_data['posting_time'];
+  $description=$post_data['description'];
+  $post_id=$post_data['post_id'];
 	?>
 	<div class="post_box">
     <?php 
