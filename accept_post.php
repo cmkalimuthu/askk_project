@@ -8,6 +8,6 @@ echo $_GET['post_id'];
             <h1>accept conformation page</h1>
             
             <!-- article ends here -->
-            
+            <h1>github testing</h1>
             
 <?php include 'includes/overall/overall_footer.php'; ?>

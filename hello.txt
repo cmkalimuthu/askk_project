@@ -1,80 +1,38 @@
-GIT HUB PROCEDURES.
-
-CREATION
-
-1.go to the folder and r-click then choose git-bash and give command git init in terminal.
-
-LINKING
-
-2.then this cmd git remote add origin "copy&paste rep link from hub"
-
-FETCHING FROM HUB(pull)
-3.git pul
-
-4.git pull origin main
-
-FILE CREATION
-5.create a new file/git status to see existing file
-
-6.git add filename/for multiple files(git add -A )
-
-COMMIT
-7.git commit -m "message"/for multiple files(git commit -a -m "message")
-changes commit in local rep
-
-8.git log (shows information about commit)
-
-BRANCHING
-
-9.git branch bname(for new branch)
-
-10.git checkout newbranchname(switch branch) or to
-
-11.ls (list files)
-
-commit made within this new branch wont reflect in master branch.
-
-MERGING
-
-always merge after all branching to main branch.
-
-//be in destination branch
-12.git merge source branch
-then list all files in master it will have all branch files
-
-13.cat filename (for see content) 
-
-
-REBASING (merging)
-
-gitpull=git fetch+merge
-
-used to reduce number of branches.
-linear work flow for better navigate
-
-14.in new branch 
-git rebase master/git rebase new branch
-
-PUSHING
-generate public ssh
-
-15.ssh-keygen
-
-16.cat loction inthat gen
-settings->ssh&gpg keys
-new sshkey->title->paste ur key from generated key in file
-then add shh key
-
-17.ssh -T git@github.com
-go to ssh key if green then activated
-now we can push
-
-in firstbranch
-18.to create branch in main rep
-git push origin firstbranchname
-(it will create new branch in main rep)
-
-in master branch
-19.git push origin master
-(it will push all changes in master hub)
-
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+-----END OPENSSH PRIVATE KEY-----
