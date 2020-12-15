@@ -1,4 +1,25 @@
 <?php 
+function delete_profile($user_id){
+global $con;
+$query="UPDATE users SET profile_pic='' WHERE user_id='$user_id'";
+if ($con->query($query) === TRUE) 
+    return true;
+    else
+	return false;
+}
+
+function profile_upload($file_ext,$file_temp,$user_id){
+	global $con;
+	 $file_path='images/profile/'.substr(md5(time()),0, 10).'.'.$file_ext;
+     move_uploaded_file($file_temp, $file_path);
+	 $query="UPDATE users SET profile_pic='$file_path' WHERE user_id='$user_id'";
+    if ($con->query($query) === TRUE) 
+    return true;
+    else
+	return false;
+
+}
+
 if(array_key_exists('block', $_POST)) { 
             block_user($_GET['username'],"block"); 
         }
@@ -19,7 +40,7 @@ function block_user($username,$data){
 function all_users(){
 	global $con;
 	$data=array();
-	$query="SELECT username ,active FROM users";
+	$query="SELECT username ,active FROM users WHERE user_type=0";
 	$res=mysqli_query($con,$query);
 		while ($row = $res->fetch_assoc()) {//fetch one by one data from db
 		$username=$row['username'];

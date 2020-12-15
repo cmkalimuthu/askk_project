@@ -85,6 +85,12 @@ h2,h1{
   width:10px;
   height:5px;
  }
-
+.profile_pic{
+  border: 1px solid #116573;
+  width: 100px;
+  height: 110px;
+  float: right;
+  margin: 10px;
+}
  
  

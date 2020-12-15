@@ -250,7 +250,7 @@ function   post_info($data,$user_id){
         
         <td valign="top" width="40%">
           <div style="padding: 10px">
-            <img src="<?php echo $post_data['picture']; ?>" width="100%" alt="<?php echo $post_data['food_type']." picture unavailable" ?>" >
+           <a href="<?php echo $post_data['picture']; ?>"> <img src="<?php echo $post_data['picture']; ?>" width="100%" alt="<?php echo $post_data['food_type']." picture unavailable" ?>" ></a>
           </div>
       
     </td>
