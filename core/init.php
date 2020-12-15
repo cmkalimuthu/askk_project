@@ -13,7 +13,7 @@ if(logged_in()===true){
 	$session_user_id=$_SESSION['user_id'];
 	$user_data=users_data($session_user_id,'user_id','username','first_name','last_name','email_id','password','password_recovery','user_type','allow_email','address','city','location','contact_no1','contact_no2','liscense_no');
 	$user_active=user_active($user_data['username']);
-	$post_data=post_select($session_user_id,'post_id','food_type','food_quantity','time_limit','active','user_id','posting_time','description');
+	$post_data=post_select($session_user_id,'post_id','food_type','food_quantity','time_limit','active','user_id','posting_time','description','accept_time','picture','post_accepted');
     
 
 	if($user_active===false){

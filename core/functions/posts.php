@@ -237,11 +237,26 @@ function   post_info($data,$user_id){
         'description'=>$row['description'],
         'posting_time'=>$row['posting_time'],
         'post_id'=>$row['post_id'],
+        'picture'=>$row['picture']
 
-        );
-        $username=username_from_user_id($post_data['user_id']);
-        $passing_to_post=post_box($post_data,$username);
+        );?>
+        <table style="width:700px;height:200px;margin-left:30px ">
+  <tr>
+    <td valign="top" width="80%" >
+     
+       <?php   $username=username_from_user_id($post_data['user_id']);?>
+       <?php $passing_to_post=post_box($post_data,$username);?>
+        </td>
         
+        <td valign="top" width="40%">
+          <div style="padding: 10px">
+            <img src="<?php echo $post_data['picture']; ?>" width="100%" alt="<?php echo $post_data['food_type']." picture unavailable" ?>" >
+          </div>
+      
+    </td>
+  </tr>
+</table><br>
+<?php 
     }
 
     //free result set 
@@ -338,7 +353,7 @@ function post_box($post_data,$username){
            		</ul>
            	</form>
            </div>
-           <br>
+           
 	<?php 
 }
 //to check post is active or not
