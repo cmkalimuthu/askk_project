@@ -231,7 +231,9 @@ function   post_info($data,$user_id){
 
         'user_id'=>$row['user_id'],
         'food_type' => $row["food_type"],
+        'food_value'=>$row['food_value'],
         'food_quantity' => $row["food_quantity"],
+        'quantity_value' =>$row['quantity_value'],
         'time_limit' => $row["time_limit"],
         'active' =>$row['active'],
         'description'=>$row['description'],
@@ -267,7 +269,9 @@ function   post_info($data,$user_id){
 function post_box($post_data,$username){
  $user_id=$post_data['user_id'];
   $food_type=$post_data['food_type'];
+  $food_value=$post_data['food_value'];
   $food_quantity=$post_data['food_quantity'];
+  $quantity_value=$post_data['quantity_value'];
   $time_limit=$post_data['time_limit'];
   $active=$post_data['active'];
   $posting_time=$post_data['posting_time'];
@@ -319,10 +323,10 @@ function post_box($post_data,$username){
            			</li>
            			<li >
            				<h4 style="color:#731d3d">Food Type:
-           				<?php echo($food_type) ?>&nbsp;
+           				<?php echo($food_type).'('.$food_value.')'; ?>&nbsp;
            			
            				|Quantity:
-           				<?php echo($food_quantity) ?>(kgs)&nbsp;
+           				<?php echo($food_quantity).'('.$quantity_value.')'; ?>&nbsp;
            			
            				|Time limit:
            				<?php echo($time_limit) ?>(hrs)</h4>

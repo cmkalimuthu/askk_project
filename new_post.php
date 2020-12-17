@@ -50,13 +50,14 @@ include 'includes/overall/overall_header.php';
             }
             else{
                 if(empty($errors)===true&&empty($_POST)===false){
-//registered      
-        
+//registered 
                     date_default_timezone_set('Asia/Kolkata');
                     $posting_time= date("Y-m-d H:i");
                     $post_data=array(
                     'food_type'  =>$_POST['food_type'],
+                    'food_value'  =>$_POST['food_value'],
                     'food_quantity'   =>$_POST['food_quantity'],
+                    'quantity_value'  =>$_POST['quantity_value'],
                     'time_limit'    =>$_POST['time_limit'],
                     'user_id'      =>$session_user_id,
                     'posting_time' =>$posting_time,
@@ -91,15 +92,27 @@ else if (empty($errors)===false) {
               <ul  style="list-style-type: none">
                 <li>
                   food type:*<br>
-                  <input type="text" name="food_type">
+                  <input type="text" name="food_type" placeholder="ex.dinner/breakfast">
+                  <select name="food_value">
+
+                    <option value="veg" selected="selected">veg</option>
+                    <option value="non-veg">non-veg</option>
+
+                  </select>
                 </li><br>
                 <li>
                   quantity:*<br>
-                  <input type="text" name="food_quantity">
+                  <input type="number" name="food_quantity" placeholder="kgs/persons">
+                  <select name="quantity_value">
+
+                    <option value="kgs" selected="selected">kgs</option>
+                    <option value="persons">persons</option>
+
+                  </select>
                 </li><br>
                 <li>
                   time limit:*<br>
-                  <input type="text" name="time_limit">
+                  <input type="number" name="time_limit" placeholder="hours" min="1" max="12">
                 </li><br>
                     <li>
                       Description:*<br>

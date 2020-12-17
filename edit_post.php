@@ -61,7 +61,9 @@ else{
 
     $post_data=array(
         'food_type'  =>$_POST['food_type'],
+        'food_value' =>$_POST['food_value'],
         'food_quantity'   =>$_POST['food_quantity'],
+        'quantity_value' =>$_POST['quantity_value'],
         'time_limit'    =>$_POST['time_limit'],
         'description' =>$_POST['description'],
         'picture' =>$file_path
@@ -94,15 +96,31 @@ else{
               <ul  style="list-style-type: none">
                 <li>
                   food type:*<br>
-                  <input type="text" name="food_type" value="<?php echo $selected_data['food_type']; ?>">
+                  <input type="text" name="food_type" placeholder="ex.dinner/breakfast" value="<?php echo $selected_data['food_type'] ?>">
+                  <input type="text" name="food_value" value="<?php echo $selected_data['food_value']; ?>"disabled="disabled">
+                  <select name="food_value">
+                    <option value="<?php echo $selected_data['food_value']; ?>" selected="selected">default
+                    <option value="veg" >veg</option>
+                    <option value="non-veg">non-veg</option>
+
+                  </select>
                 </li><br>
                 <li>
+                  
                   quantity:*<br>
-                  <input type="text" name="food_quantity" value="<?php echo $selected_data['food_quantity']; ?>">
+                  <input type="number" name="food_quantity" placeholder="kgs/persons"value="<?php echo $selected_data['food_quantity'] ?>">
+                  <input type="text" name="quantity_value" value="<?php echo $selected_data['quantity_value']; ?>"disabled="disabled">
+
+                  <select name="quantity_value">
+                    <option value="<?php echo $selected_data['quantity_value']; ?>" selected="selected">default</option>
+                    <option value="kgs" >kgs</option>
+                    <option value="persons">persons</option>
+
+                  </select>
                 </li><br>
                 <li>
                   time limit:*<br>
-                  <input type="text" name="time_limit"value="<?php echo $selected_data['time_limit']; ?>">
+                  <input type="number" name="time_limit"value="<?php echo $selected_data['time_limit']; ?>"min="1" max="12">
                 </li><br>
                 <li>
                   Description:*<br>

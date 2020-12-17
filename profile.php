@@ -38,6 +38,11 @@ if(isset($_GET['username'])===true&&empty($_GET['username'])===false){
 	    </div>
 	
 	<h1 style="color:#116573"><?php echo xss($profile_data['first_name']);?>'s profile</h1>
+    <?php  
+    if($session_user_id!==$user_id){
+?>
+     <span><a href="message.php?user_id=<?php echo $user_id; ?>"style="border: 2px solid white;background-color:#ddd;padding: 4.5px;color:#116573; ">message</a></span><?php } ?>
+
 	<p><strong>Organisation Type:&nbsp;</strong><?php echo $profile_data['last_name'];?></p>
 	<p><strong>Email Id:&nbsp;</strong><?php echo $profile_data['email_id'];?></p><hr>
 
