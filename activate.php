@@ -1,19 +1,18 @@
 <?php 
 include 'core/init.php'; 
-//protect_page();//protect page from accessing from outside
-
-//checking whether data recieved in server
 protect_redirect();//to avoid accessing the page after logged in
 include 'includes/overall/overall_header.php';?>
 <?php 
 //check whether page is new or already visited 
 //checking whether url contains the success keyword in it
+
 if(isset($_GET['success'])===true&&empty($_GET['success'])===true){
 	?>
 	<h2>thanks ,we've activated your account</h2>
 	<p>your are free to login</p>
 	<?php  
 }
+
 //if it is new visit 1st time
 ////checking whether url contains the email_id and email_code keyword in it from mail link
 else if(isset($_GET['email_id'],$_GET['email_code'])===true){
@@ -27,7 +26,7 @@ else if(isset($_GET['email_id'],$_GET['email_code'])===true){
 	else if (activate($email_id,$email_code)===false) {
 		$errors[ ]='we have problems at activatating your account';
 	}
-	//if above all are notsatisfied it print the errors
+	//if above all conditions are not satisfied it print the errors
 	if(empty($errors)===false){
 		?>
 		<h2>oops..</h2>
@@ -37,40 +36,36 @@ else if(isset($_GET['email_id'],$_GET['email_code'])===true){
 	//if everything is fine it redirects to activate.php with success keyword to indicate its visited
 	else{
 		 ?>
+		<!--for header function-->
 		<script>
+          setTimeout(function()
+          { 
+             window.location = "activate.php?success"; 
+          }, 500);
 
-setTimeout(function()
-{ 
-     window.location = "activate.php?success"; 
-}, 500);
-
-</script>
-		<?php
-          exit();
+        </script>
+	    	<?php
+               exit();
 		
 	}
 }
 //if nothing happens it directs to index page
 else{
  ?>
-		<script>
+	<script>
 
-setTimeout(function()
-{ 
+    setTimeout(function()
+    { 
      window.location = "index.php"; 
-}, 500);
+    }, 500);
 
-</script>
+    </script>
 		<?php
           exit();
 }
 
 ?>
 
-
- 
-            
 <?php
- 
 include 'includes/overall/overall_footer.php';
  ?>

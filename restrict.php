@@ -1,25 +1,17 @@
-
 <?php 
 include 'core/init.php'; 
-include 'includes/overall/overall_header.php'; 
 admin_protect();
-
+protect_page();
+include 'includes/overall/overall_header.php';
 ?>
-
-            <!-- article starts here -->
-            <h1>RESTRICT USERS</h1>
+         <h1>RESTRICT USERS</h1>
             
             <?php  
-                
-              $all_users=all_users();
-              
-             
-              
-               print_r($all_users);
+                all_users();
           
-               ?> 
-                
- 				
+             ?> 
             
-            
-<?php include 'includes/overall/overall_footer.php'; ?>
+<?php
+ 
+include 'includes/overall/overall_footer.php';
+ ?>

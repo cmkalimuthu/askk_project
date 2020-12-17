@@ -1,10 +1,9 @@
 <?php 
 include 'core/init.php'; 
-//protect_page();//protect page from accessing from outside
-
 //checking whether data recieved in server
 protect_page();
 include 'includes/overall/overall_header.php';
+
 global $session_user_id;
 if(isset($_GET['success'])===true){
 	?>
@@ -29,13 +28,12 @@ else if(empty(($_POST))===false){
 		
 		 ?>
 		<script>
-
-setTimeout(function()
-{ 
-     window.location = "message.php?success"; 
-}, 500);
-
-</script>
+        setTimeout(function()
+        { 
+             window.location = "message.php?success"; 
+        }, 500);
+        
+        </script>
 		<?php
           exit();
 		

@@ -1,3 +1,4 @@
+
 <?php 
 include 'core/init.php';
 protect_page();
@@ -7,35 +8,35 @@ if(isset($_GET['username'])===true&&empty($_GET['username'])===false){
 	$username=$_GET['username'];
 	//user exist
 	if(user_exists($username)===true){
-
-	$user_id=user_id_from_username($username);
-	//fetching details from database using users data function
-	$profile_data=users_data($user_id,'first_name','last_name','email_id','address','city','location','contact_no1','contact_no2','liscense_no','profile_pic');
-	?>
-	<div class="profile_pic">
-		<?php 
-		if(empty($profile_data['profile_pic'])===false){
-			?>
-			<a href="<?php echo $profile_data['profile_pic']; ?>">
-			<img src="<?php echo $profile_data['profile_pic']; ?>" alt="image unavilable" width="100%" height="100%"></a>
-			<?php if($session_user_id===$user_id){ ?>
-			<span style="float: right;"><a href="profile_pic.php?delete">Delete</a>&nbsp;&nbsp;<a href="profile_pic.php?change">Change</a></span>
-			<?php 
-		}
-		}
-		else if($session_user_id===$user_id){
-			?>
-			<a href="profile_pic.php?upload">upload</a>
-			<?php 
-		}
-		else{
-			?>
-			<img src="unknown.jpg" alt="unknown" width="100%" height="100%"></a>
-			<?php  
-		}
-		?>
+        $user_id=user_id_from_username($username);
+	    //fetching details from database using users data function
+	    $profile_data=users_data($user_id,'first_name','last_name','email_id','address','city','location','contact_no1','contact_no2','liscense_no','profile_pic');
+?>
+	
+	    <div class="profile_pic">
+    		<?php 
+    		if(empty($profile_data['profile_pic'])===false){
+    			?>
+    			<a href="<?php echo $profile_data['profile_pic']; ?>">
+    			<img src="<?php echo $profile_data['profile_pic']; ?>" alt="image unavilable" width="100%" height="100%"></a>
+    			<?php if($session_user_id===$user_id){ ?>
+    			<span style="float: right;"><a href="profile_pic.php?delete">Delete</a>&nbsp;&nbsp;<a href="profile_pic.php?change">Change</a></span>
+    			<?php 
+    		}
+    		}
+    	    else if($session_user_id===$user_id){
+    			?>
+    			<a href="profile_pic.php?upload">upload</a>
+    			<?php 
+    		}
+    		else{
+    			?>
+    			<img src="unknown.jpg" alt="unknown" width="100%" height="100%"></a>
+    			<?php }
+    		?>
     
-	</div>
+	    </div>
+	
 	<h1 style="color:#116573"><?php echo xss($profile_data['first_name']);?>'s profile</h1>
 	<p><strong>Organisation Type:&nbsp;</strong><?php echo $profile_data['last_name'];?></p>
 	<p><strong>Email Id:&nbsp;</strong><?php echo $profile_data['email_id'];?></p><hr>
@@ -53,25 +54,24 @@ if(isset($_GET['username'])===true&&empty($_GET['username'])===false){
 	<?php
 	$data='profile';
 	post_info($data,$user_id);
-}
+    }
 else{
 	echo "sorry that user name not exists :(";
 }
-}else{
-?>
+}
+else{
+        ?>
 		<script>
 
-setTimeout(function()
-{ 
-     window.location = "feeds.php"; 
-}, 500);
-
-</script>
+        setTimeout(function()
+        { 
+             window.location = "feeds.php"; 
+        }, 500);
+        
+        </script>
 		<?php
-	exit();
+	        exit();
 }
 ?>
-
-
 
 <?php include 'includes/overall/overall_footer.php'; ?>

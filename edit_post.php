@@ -1,10 +1,9 @@
 <?php 
 include 'core/init.php'; 
 //protect_page();//protect page from accessing from outside
-
-//checking whether data recieved in server
 protect_page();
 include 'includes/overall/overall_header.php';
+//checking whether data recieved in server
 if(isset($_GET['success'])===false){
 $post_id= $_GET['post_id'];
 $selected_data=post_select_by_post_id($post_id);
@@ -17,15 +16,17 @@ if(empty($_POST)===false){
           $errors[]='fields marked with asterisk are required';
           break 1;
          }
-       }
-       if(isset($_FILES['post_img'])===true)
-             {
-              if(empty($_FILES['post_img']['name'])===true){
-                $errors[]="choose a file";
+    }
+    //checking for any files uploaded in input
+  if(isset($_FILES['post_img'])===true)
+    {
+        if(empty($_FILES['post_img']['name'])===true){
+            $errors[]="choose a file";
 
-              }
-              else
-              {
+        }
+        else
+        { 
+            //format check,extension,lowercase,then location path
                 $allowed=array('jpeg','jpg','gif','png');
                 $file_name=$_FILES['post_img']['name'];
                 $file_ext=(explode('.', $file_name));
@@ -43,54 +44,53 @@ if(empty($_POST)===false){
                   $errors[]= " format should be ".implode('.', $allowed);
                 }
 
-              }
-             }
-         else
-          $errors[] ='file not selected';
+        }
+    }
+    else
+         $errors[] ='file not selected';
           
        
 }
 
 if(isset($_GET['success'])&&empty($_GET['success'])){
-              echo "you have been successfully updated your post";
-             }
-             else{
-                if(empty($errors)===true&&empty($_POST)===false){
-//registered    
+    echo "you have been successfully updated your post";
+}
+else{
+    if(empty($errors)===true&&empty($_POST)===false){
+     //registered    
 
-              $post_data=array(
-          'food_type'  =>$_POST['food_type'],
+    $post_data=array(
+        'food_type'  =>$_POST['food_type'],
         'food_quantity'   =>$_POST['food_quantity'],
         'time_limit'    =>$_POST['time_limit'],
         'description' =>$_POST['description'],
         'picture' =>$file_path
         );
-        $post_update=update_post($post_id,$post_data);
+    $post_update=update_post($post_id,$post_data);
         if($post_update===true){
-           ?>
-		<script>
-
-setTimeout(function()
-{ 
-     window.location = "edit_post.php?success"; 
-}, 500);
-
-</script>
-		<?php
-          exit();
+        ?>
+          <script>
+                setTimeout(function()
+                { 
+                     window.location = "edit_post.php?success"; 
+                }, 500);
+    
+            </script>
+      <?php
+              exit();
         }
-else{
-  echo "some error has occured please give correct format";
-  //redirect
-}
-}
-else if (empty($errors)===false) {
+        else{
+            echo "some error has occured please give correct format";
+        //redirect
+        }
+    }
+    else if (empty($errors)===false) {
   # code...
-  echo output_errors($errors);
-}
+        echo output_errors($errors);
+     }
 ?>
- <h1>Edit post</h1>
-<form  action="" method="post" enctype="multipart/form-data">
+    <h1>Edit post</h1>
+    <form  action="" method="post" enctype="multipart/form-data">
               <ul  style="list-style-type: none">
                 <li>
                   food type:*<br>
@@ -110,18 +110,17 @@ else if (empty($errors)===false) {
                 </li><br>
                 <li>
                   <div style="padding: 10px">
-           <a href="<?php echo $selected_data['picture']; ?>"> <img src="<?php echo $selected_data['picture']; ?>" width="10%" alt="<?php echo $selected_data['food_type']." picture unavailable" ?>" ></a>
-          </div>
-                  Picture:*<input type="file" name="post_img" value="<?php echo $selected_data['picture']; ?>">
+                    <img src="<?php echo $selected_data['picture']; ?>" width="10%" alt="<?php echo $selected_data['food_type']." picture unavailable" ?>" >
+                  </div>
+                  Picture:*<input type="file" name="post_img">
                 </li>
                 <li>
-                  
                   <input type="submit" value="update">
                 </li>
               </ul>
-            </form>
+    </form>
             
 <?php
-             }
+}
 include 'includes/overall/overall_footer.php';
  ?>

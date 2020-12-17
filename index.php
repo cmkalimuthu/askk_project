@@ -11,8 +11,6 @@ include 'includes/overall/overall_header.php';
             <h1>WELCOME HOME</h1>
             <p>coming soon!!</p>
             <!-- article ends here -->
-            <?php 
-       
-         ?> 
+           
             
 <?php include 'includes/overall/overall_footer.php'; ?>

@@ -3,7 +3,6 @@ include 'core/init.php';
 protect_page();
 include 'includes/overall/overall_header.php'; 
 
-
 ?>
 
             <!-- article starts here -->

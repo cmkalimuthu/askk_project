@@ -16,9 +16,6 @@
 		<a href="logged_out.php">&nbsp;Logout</a>
 	</li>
 	<li class="widget_list">
-		<a href="change_password.php">&nbsp;change password</a>
-	</li>
-	<li class="widget_list">
 		<a href="settings.php">&nbsp;Settings</a>
 	</li>
 	<li class="widget_list">

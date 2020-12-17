@@ -1,13 +1,10 @@
 <?php 
 include 'core/init.php'; 
-//protect_page();//protect page from accessing from outside
-
-//checking whether data recieved in server
 protect_page();
 include 'includes/overall/overall_header.php';
 //checking not empty 
 if(empty($_POST)===false){
-$required_fields=array('first_name','email_id','address','city','contact_no1','contact_no2','liscense_no');
+    $required_fields=array('first_name','email_id','address','city','contact_no1','contact_no2','liscense_no');
     foreach ($_POST as $key => $value) {
          if(empty($value)&& in_array($key,$required_fields)===true){
             $errors[]='fields marked with asterisk are required';
@@ -15,22 +12,21 @@ $required_fields=array('first_name','email_id','address','city','contact_no1','c
         }
        
     }
-     if( preg_match('/^[0-9]{10}+$/', $_POST['contact_no1'])==false)
+    if( preg_match('/^[0-9]{10}+$/', $_POST['contact_no1'])==false)
             $errors[]='enter a valid phone number in contact_no1';
         if( preg_match('/^[0-9]{10}+$/', $_POST['contact_no2'])==false)
             $errors[]='enter a valid phone number in contact_no2';
     //validate email
-    if(empty($errors)===true){
-        if(filter_var($_POST['email_id'],FILTER_VALIDATE_EMAIL)===false){
+        if(empty($errors)===true){
+            if(filter_var($_POST['email_id'],FILTER_VALIDATE_EMAIL)===false){
             $errors[]='enter a valid email id ';
-
-        }
+            }
         //email exists and check new email is exist
-        else if (email_exists($_POST['email_id'])===true && $user_data['email_id']!==$_POST['email_id']) {
-            $errors[]=' sorry, the email id \''.$_POST['email_id'].'\' already exist choose another';
-            
+            else if (email_exists($_POST['email_id'])===true && $user_data['email_id']!==$_POST['email_id']) {
+                $errors[]=' sorry, the email id \''.$_POST['email_id'].'\' already exist choose another';
+                
+            }
         }
-    }
 
 }
 ?>
@@ -38,12 +34,12 @@ $required_fields=array('first_name','email_id','address','city','contact_no1','c
 <?php 
  if(isset($_GET['success'])&&empty($_GET['success'])){
                 echo "you have been updated successfully";
-}
-else{
-if(empty($_POST)===false&&empty($errors)===true){
+ }
+ else{
+    if(empty($_POST)===false&&empty($errors)===true){
     //update the details in db
     $allow_email=($_POST['allow_email']=='on')?1:0;
- $update_data=array(
+    $update_data=array(
                 'first_name'    =>$_POST['first_name'],
                 'last_name'     =>$_POST['last_name'],
                 'email_id'      =>$_POST['email_id'],
@@ -55,26 +51,26 @@ if(empty($_POST)===false&&empty($errors)===true){
                 'contact_no2'   =>$_POST['contact_no2'],
                 'liscense_no'   =>$_POST['liscense_no']
             );
- $settings_update=settings_update($session_user_id,$update_data);
- if($settings_update===true){
-     ?>
-		<script>
+    $settings_update=settings_update($session_user_id,$update_data);
+        if($settings_update===true){
+         ?>
+            <script>
+    
+            setTimeout(function()
+            { 
+                 window.location = "settings.php?success"; 
+            }, 500);
+            
+            </script>
+                    <?php
+                      exit();
+        }
 
-setTimeout(function()
-{ 
-     window.location = "settings.php?success"; 
-}, 500);
 
-</script>
-		<?php
-          exit();
- }
-
-
- }
-else if(empty($errors)===false){
-    echo output_errors($errors);
-}
+    }
+      else if(empty($errors)===false){
+      echo output_errors($errors);
+      }
 ?>
 <form action="" method="post">
     
@@ -97,8 +93,9 @@ else if(empty($errors)===false){
                   <option value="others">others</option>
 
                      </select>
-                    </li>
-        </li><br>
+            </li>
+        </li>
+        <br>
         <li>
             Email Id*:<br>
             <input type="text" name="email_id" value="<?php echo $user_data['email_id']; ?>">
@@ -130,7 +127,9 @@ else if(empty($errors)===false){
             Organization Liscense*:<br>
             <input type="text" name="liscense_no" value="<?php echo $user_data['liscense_no']; ?>">
         </li><br>
-
+        <li>
+            <a href="change_password.php"> change password</a>
+        </li><br>
 
         <li>
             <input type="submit" value="update">
