@@ -1,4 +1,14 @@
 <?php 
+
+if(array_key_exists('delete_user', $_POST)) { 
+            delete_user($_GET['username']); 
+        }
+function delete_user($username){
+    global $con;
+   $query="DELETE FROM users WHERE username='$username'";
+   $res=mysqli_query($con,$query);
+
+}
 function delete_profile($user_id){
 global $con;
 $query="UPDATE users SET profile_pic='' WHERE user_id='$user_id'";
@@ -77,6 +87,7 @@ function display_all_users($username,$active){
 				<li>
 					<input type="submit" name="block" value="Block" style="background-color: red;color: white;cursor: pointer;border: 2px solid #ddd;background-color: <?php echo "$bg"; ?>" <?php echo $block_disable; ?>>
 					<input type="submit" name="unblock" value="Un-Block"style="background-color: green;color: white;cursor: pointer;border: 2px solid #ddd;background-color: <?php echo "$ug"; ?>"<?php echo $unblock_disable; ?>>
+					<input type="submit" name="delete_user" value="delete"style="background-color:black;color: white;cursor: pointer;">
 				</li>
 			</li>
 			</form>
@@ -183,9 +194,10 @@ function email($to,$subject,$body){
 //function to register the user
 function registered_users($register_data){
 	global $con;
-	foreach ($register_data as $key => $value) {
-	$value=mysqli_escape_string($con,$value);
+	foreach ($register_data as $key ) {
+	$value=mysqli_escape_string($con,$key);
 }
+
 	$register_data['password']    =md5($register_data['password']);
 	$fields                       ='`'.implode('`, `',array_keys($register_data)).'`';
 	$data                         ='\''.implode('\', \'',	 $register_data).'\'';
@@ -193,9 +205,9 @@ function registered_users($register_data){
 	//connect query and database
 	if ($con->query($query) === TRUE) {
     //for activating account
-  	    email($register_data['email_id'],'Activate your account',"hello ".$register_data['first_name'].",\n\nyou need to activate your account, so use the link bellow link:\n\n  https://askk1.000webhostapp.com/activate.php?email_id=".$register_data['email_id']."&email_code=".$register_data['email_code']. ",\n\nThanks and Regards !\n\n- Donorsclub.");
+  	    email($register_data['email_id'],'Activate your account',"hello ".$register_data['first_name'].",\n\nyou need to activate your account, so use the link bellow link:\n\n  http://localhost/portal/activate.php?email_id=".$register_data['email_id']."&email_code=".$register_data['email_code']. ",\n\nThanks and Regards !\n\n- Donorsclub.");
        return true;
-    } 
+    }  
     else {
        return false;
 }

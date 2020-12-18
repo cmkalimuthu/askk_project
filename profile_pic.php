@@ -3,7 +3,7 @@ include 'core/init.php';
 
 protect_page();
 include 'includes/overall/overall_header.php';
-
+$username=$user_data['username'];
 if(isset($_GET['change'])===true||isset($_GET['upload'])===true){
             if(isset($_FILES['post_img'])===true)
              {
@@ -17,11 +17,24 @@ if(isset($_GET['change'])===true||isset($_GET['upload'])===true){
                 $file_ext=end($file_ext);
                 $file_ext=strtolower($file_ext);
                 $file_temp=$_FILES['post_img']['tmp_name'];
+                
                 if(in_array($file_ext, $allowed)===true)
                 {
                     $profile_upload=profile_upload($file_ext,$file_temp,$session_user_id);
                         if($profile_upload===true){
-                          echo "success";
+                            
+                            ?>
+                    <script>
+        
+                        setTimeout(function()
+                        { 
+                             window.location = '<?php echo $username; ?>'; 
+                        }, 500);
+        
+                        </script>
+                    <?php
+                            exit();
+                                  
                         }
                   }
                     else{
@@ -41,7 +54,7 @@ if(isset($_GET['change'])===true||isset($_GET['upload'])===true){
                     <form method="post" action="" enctype="multipart/form-data">
              
                       <input type="file" name="post_img">
-                      <input type="submit" value="change">
+                      <input type="submit" value="apply">
                   </form>
                  </div>
               
@@ -60,7 +73,7 @@ if(isset($_GET['change'])===true||isset($_GET['upload'])===true){
 
                 setTimeout(function()
                 { 
-                     window.location = "profile.php?success"; 
+                     window.location = '<?php echo $username; ?>'; 
                 }, 500);
 
                 </script>

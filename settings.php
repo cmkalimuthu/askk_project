@@ -121,7 +121,7 @@ if(empty($_POST)===false){
         </li><br>
          <li>
             Contact No2*:<br>
-            <input type="text" name="contact_no2" value="<?php echo $user_data['contact_no1']; ?>">
+            <input type="text" name="contact_no2" value="<?php echo $user_data['contact_no2']; ?>">
         </li><br>
          <li>
             Organization Liscense*:<br>

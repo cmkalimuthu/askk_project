@@ -52,14 +52,15 @@ if(empty($_POST)===false){
              }
              else{
                 if(empty($errors)===true&&empty($_POST)==false){
-//registered
+//registered_users
+               $email_code=md5($_POST['username'].microtime());
                $register_data=array(
             'username'     =>$_POST['username'],
             'first_name'   =>$_POST['first_name'],
             'last_name'    =>$_POST['last_name'],
             'email_id'     =>$_POST['email_id'],
             'password'     =>$_POST['password'],
-            'email_code'    =>md5($_POST['username']+microtime()),
+            'email_code'    =>$email_code,
             'address'      =>$_POST['address'],
             'location'     =>$_POST['location'],
             'contact_no1'  =>$_POST['contact_no1'],

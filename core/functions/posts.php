@@ -1,7 +1,32 @@
 <?php  
 if(array_key_exists('delete', $_POST)) { 
             delete_post($_GET['post_id']); 
-        } 
+        }
+if(array_key_exists('repost', $_POST)) { 
+            re_post($_GET['post_id']); 
+        }
+function re_post($post_id){
+    global $con;
+    date_default_timezone_set('Asia/Kolkata');
+    $repost_time= date("Y-m-d H:i");
+    $query="UPDATE post SET posting_time='$repost_time',active=1,post_accepted=0 WHERE post_id='$post_id'";
+    if ($con->query($query) === TRUE){ 
+      ?>
+    <script>
+        
+        setTimeout(function()
+        { 
+             window.location = "edit_post.php?post_id=<?php echo $post_id;?>"; 
+        }, 100);
+        
+        </script>
+    <?php
+          exit();
+    }
+      else
+      return false;
+    
+}
 function delete_post($post_id){
   global $con;
   $query="DELETE  FROM post WHERE post_id='$post_id'";
@@ -9,7 +34,7 @@ function delete_post($post_id){
   //header('Location:profile.php');
   //exit();
   ?>
-		<script>
+    <script>
 
 setTimeout(function()
 { 
@@ -17,7 +42,7 @@ setTimeout(function()
 }, 100);
 
 </script>
-		<?php
+    <?php
           exit();
 }
 //notification
@@ -42,19 +67,19 @@ function my_message_display($message,$reciever,$recieved_time,$sender,$data){
   if($data=="sent"){
   ?>
   
-  <div style="background-color: #bbb;padding: 4.5px;margin: 5px;">&nbsp;To&nbsp;<a href="<?php echo "$reciever"; ?>"><?php echo "$reciever"; ?></a>&nbsp;:<?php echo "$message"; ?><span style="float: right;"><?php echo "$recieved_time"; ?></span></div>
+  <div style="background-color: #bbb;padding: 4.5px;margin: 5px;">&nbsp;To&nbsp;<a href="<?php echo "$reciever"; ?>"><?php echo "$reciever"; ?></a>&nbsp;:<?php echo "$message"; ?><span style="float: right;color:white;font-size: 13px;"><?php echo "$recieved_time"; ?></span></div>
   <?php
    }
   else if($data=="recieved"){
     ?>
-      <div style="background-color: #bbb;padding: 4.5px;margin: 5px;">&nbsp;From&nbsp;<a href="<?php echo "$sender"; ?>"><?php echo "$sender"; ?>&nbsp;</a>:<?php echo "$message"; ?><span style="float: right;"><?php echo "$recieved_time"; ?></span></div>
+      <div style="background-color: #bbb;padding: 4.5px;margin: 5px;">&nbsp;From&nbsp;<a href="<?php echo "$sender"; ?>"><?php echo "$sender"; ?>&nbsp;</a>:<?php echo "$message"; ?><span style="float: right;color:white;font-size: 13px;"><?php echo "$recieved_time"; ?></span></div>
     <?php
   }  
 }
 function message($sender,$reciever,$message){
    global $con;
    date_default_timezone_set('Asia/Kolkata');
-   $sending_time= date("Y-m-d H:i");
+   $sending_time=date("d-m-Y h:i A");
    $query="INSERT INTO `messages` (`sender` ,`reciever`,`message`,`message_time`)VALUES('$sender','$reciever','$message','$sending_time')";
    
   if ($con->query($query) === TRUE) 
@@ -215,19 +240,19 @@ function post_select($user_id){
 }
 function   post_info($data,$user_id){
  global $con,$session_user_id;
-	   if($data==='feeds')//for normal feed page
-		   $query="SELECT * FROM post WHERE active=1";
+     if($data==='feeds')//for normal feed page
+       $query="SELECT * FROM post WHERE active=1";
 
-	   else if($data==='profile')//for profile post
-	   	 $query="SELECT * FROM post where user_id=$user_id";
+     else if($data==='profile')//for profile post
+       $query="SELECT * FROM post where user_id=$user_id";
 
-		 else if($data==='admin')//to admin for viewing all post in db
+     else if($data==='admin')//to admin for viewing all post in db
        $query="SELECT * FROM post "; 
 
-		 if($res=mysqli_query($con,$query)) {
+     if($res=mysqli_query($con,$query)) {
     //store values in variable from post table
     while ($row = $res->fetch_assoc()) {
-    	  $post_data=array(
+        $post_data=array(
 
         'user_id'=>$row['user_id'],
         'food_type' => $row["food_type"],
@@ -250,10 +275,11 @@ function   post_info($data,$user_id){
        <?php $passing_to_post=post_box($post_data,$username);?>
         </td>
         
-        <td valign="top" width="40%">
-          <div style="padding: 10px">
-           <a href="<?php echo $post_data['picture']; ?>"> <img src="<?php echo $post_data['picture']; ?>" width="100%" alt="<?php echo $post_data['food_type']." picture unavailable" ?>" ></a>
+        <td valign="top" width="40%" height:307px;>
+          <div style="padding: 10px;padding-top: 25px;" >
+           <a href="<?php echo $post_data['picture']; ?>"> <img src="<?php echo $post_data['picture']; ?>" width="355px" height="275px" alt="<?php echo $post_data['food_type']." picture unavailable" ?>" ></a>
           </div>
+          
       
     </td>
   </tr>
@@ -277,8 +303,8 @@ function post_box($post_data,$username){
   $posting_time=$post_data['posting_time'];
   $description=$post_data['description'];
   $post_id=$post_data['post_id'];
-	?>
-	<div class="post_box">
+  ?>
+  <div class="post_box">
     <?php 
         global $session_user_id;
         $post_notification=0; $delete=0;
@@ -316,25 +342,25 @@ function post_box($post_data,$username){
                
                   
      ?>
-           	<form action="<?php echo "$accept"; ?>" method="post">
-           		<ul  style="list-style-type: none">
-           			<li>
-           				<h2><a href="<?php echo($username) ?>" style="color:#116573;"><?php echo($username) ?></a><span class='post_active' style="background-color:<?php echo "$color"; ?>;">&nbsp;&nbsp;</span></h2><small>posted on <?php echo "$posting_time"; ?></small>
-           			</li>
-           			<li >
-           				<h4 style="color:#731d3d">Food Type:
-           				<?php echo($food_type).'('.$food_value.')'; ?>&nbsp;
-           			
-           				|Quantity:
-           				<?php echo($food_quantity).'('.$quantity_value.')'; ?>&nbsp;
-           			
-           				|Time limit:
-           				<?php echo($time_limit) ?>(hrs)</h4>
-           			
-           				<li><h4>Description:</h4><?php echo $description; ?></li>
-           			</li><br>
-           			<li>
-           				
+            <form action="<?php echo "$accept"; ?>" method="post">
+              <ul  style="list-style-type: none">
+                <li>
+                  <h2><a href="<?php echo($username) ?>" style="color:#116573;"><?php echo($username) ?></a><span class='post_active' style="background-color:<?php echo "$color"; ?>;">&nbsp;&nbsp;</span></h2><small>posted on <?php echo "$posting_time"; ?></small>
+                </li>
+                <li >
+                  <h4 style="color:#731d3d">Food Type:
+                  <?php echo($food_type).'('.$food_value.')'; ?>&nbsp;
+                
+                  |Quantity:
+                  <?php echo($food_quantity).'('.$quantity_value.')'; ?>&nbsp;
+                
+                  |Time limit:
+                  <?php echo($time_limit) ?>(hrs)</h4>
+                
+                  <li><h4>Description:</h4><?php echo $description; ?></li>
+                </li><br>
+                <li>
+                  
                   <input <?php echo $hidden;if( $disable==="disabled")echo $disable; ?> type="submit"  value="<?php echo $value ?>" style="background-color: <?php echo "$bgcolor" ?>;color: white;cursor: pointer ;border: 2px solid white;"> 
                   <?php
                   if($value!="edit"&&$session_user_id!="$user_id"){  
@@ -345,25 +371,28 @@ function post_box($post_data,$username){
               }
               if($delete===1&&post_active($user_id,$posting_time,$time_limit)==false||$value==="edit"){
                 ?>
-                <span><input type="submit" value="delete" name ="delete" style="border: 2px solid white;background-color:#ff1111;padding: 4.5px;margin: 3px;color:white;cursor:pointer;"></input></span>
+                <span><input type="submit" value="delete" name ="delete" style="border: 2px solid white;background-color:#ff1111;padding: 4.5px;margin: 3px;color:white;cursor:pointer;"></input></span><?php
+                if($session_user_id===$user_id && $color==='red'){ ?>
+                <span><input type="submit" value="repost" name ="repost" style="border: 2px solid white;background-color:#2e00d2;padding: 4.5px;margin: 3px;color:white;cursor:pointer;"></input></span>
                 <?php  
+              }
               }
                 if($post_notification==1) 
                   post_notification($post_id);
                 ?>
                    
-           			</li>
-           			
-           		</ul>
-           	</form>
+                </li>
+                
+              </ul>
+            </form>
            </div>
            
-	<?php 
+  <?php 
 }
 //to check post is active or not
 function post_active($post_id,$posted_time,$time_limit){
 
-	  date_default_timezone_set('Asia/Kolkata');
+    date_default_timezone_set('Asia/Kolkata');
     $current_time= strtotime(date("Y-m-d H:i"));
     $posted_time=strtotime($posted_time);
     $diff=abs($current_time-$posted_time)/(60*60);
@@ -379,20 +408,20 @@ function post_active($post_id,$posted_time,$time_limit){
    
 }
 function post_data($post_data){
-	global $con;
-	foreach ($post_data as $key => $value) {
-	$value=sanitize($con,$value);
-		
-	}
-	$fields                       ='`'.implode('`, `',array_keys($post_data)).'`';
-	$data                         ='\''.implode('\', \'',	 $post_data).'\'';
+  global $con;
+  foreach ($post_data as $key => $value) {
+  $value=sanitize($con,$value);
+    
+  }
+  $fields                       ='`'.implode('`, `',array_keys($post_data)).'`';
+  $data                         ='\''.implode('\', \'',  $post_data).'\'';
     $query                        ="INSERT INTO post ($fields) VALUES ($data)";
-	//connect query and database
+  //connect query and database
    
-	if ($con->query($query) === TRUE) 
+  if ($con->query($query) === TRUE) 
   return true;
   else
-	return false;
+  return false;
 
 }
 ?>
